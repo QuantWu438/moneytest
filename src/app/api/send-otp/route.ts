@@ -37,7 +37,7 @@ export async function POST(request: Request) {
       );
     }
 
-    // Suppress deprecation warning; prefer not to update Twilio SDK now
+    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-expect-error: Suppressing deprecation warning; prefer not to update Twilio SDK now
     await client.verify
       .services(verifyServiceSid)
