@@ -36,8 +36,8 @@ export async function POST(request: Request) {
         { status: 400 }
       );
     }
-    
-    // @ts-ignore
+
+    // @ts-expect-error
     await client.verify
       .services(verifyServiceSid)
       .verifications.create({ to: phoneNumber, channel: 'sms' });
