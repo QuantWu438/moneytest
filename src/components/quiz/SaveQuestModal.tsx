@@ -133,7 +133,11 @@ const SaveQuestModal: React.FC<SaveQuestModalProps> = ({
       setStep(2);
       setCountdown(300);
     } catch (err: unknown) {
-      setError(err.message || 'Something went wrong. Please try again.');
+      if (err instanceof Error) {
+        setError(err.message || 'Something went wrong. Please try again.');
+      } else {
+        setError('Something went wrong. Please try again.');
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -186,10 +190,18 @@ const SaveQuestModal: React.FC<SaveQuestModalProps> = ({
 
         setStep(3);
       } catch (err: unknown) {
-        setError(err.message || 'Failed to send email after OTP verification.');
+        if (err instanceof Error) {
+          setError(err.message || 'Failed to send email after OTP verification.');
+        } else {
+          setError('Failed to send email after OTP verification.');
+        }
       }
     } catch (err: unknown) {
-      setOtpError(err.message || 'Something went wrong. Please try again.');
+      if (err instanceof Error) {
+        setOtpError(err.message || 'Something went wrong. Please try again.');
+      } else {
+        setOtpError('Something went wrong. Please try again.');
+      }
     } finally {
       setIsVerifying(false);
     }
@@ -220,7 +232,11 @@ const SaveQuestModal: React.FC<SaveQuestModalProps> = ({
       setStep(2);
       setCountdown(300);
     } catch (err: unknown) {
-      setOtpError(err.message || 'Something went wrong. Please try again.');
+      if (err instanceof Error) {
+        setOtpError(err.message || 'Something went wrong. Please try again.');
+      } else {
+        setOtpError('Something went wrong. Please try again.');
+      }
     } finally {
       setIsSubmitting(false);
     }
@@ -253,7 +269,7 @@ const SaveQuestModal: React.FC<SaveQuestModalProps> = ({
                   <div className="w-6 h-6 rounded-full bg-neon-blue/10 flex items-center justify-center text-neon-blue shrink-0">
                     ✓
                   </div>
-                  <p>Join our authentic commmunity together</p>
+                  <p>Join our authentic community together</p>
                 </div>
                 <div className="flex items-start space-x-3">
                   <div className="w-6 h-6 rounded-full bg-neon-blue/10 flex items-center justify-center text-neon-blue shrink-0">
