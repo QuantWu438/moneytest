@@ -7,10 +7,23 @@ const accountSid = process.env.TWILIO_ACCOUNT_SID;
 const authToken = process.env.TWILIO_AUTH_TOKEN;
 const verifyServiceSid = process.env.TWILIO_VERIFY_SERVICE_SID;
 
-if (!accountSid || !authToken || !verifyServiceSid) {
-  console.error('Twilio credentials are missing');
+// Check if environment variables are defined
+if (!accountSid) {
+  console.error('TWILIO_ACCOUNT_SID is missing');
+  throw new Error('TWILIO_ACCOUNT_SID is missing');
 }
 
+if (!authToken) {
+  console.error('TWILIO_AUTH_TOKEN is missing');
+  throw new Error('TWILIO_AUTH_TOKEN is missing');
+}
+
+if (!verifyServiceSid) {
+  console.error('TWILIO_VERIFY_SERVICE_SID is missing');
+  throw new Error('TWILIO_VERIFY_SERVICE_SID is missing');
+}
+
+// At this point, TypeScript knows that accountSid, authToken, and verifyServiceSid are strings
 const client = twilio(accountSid, authToken);
 
 export async function POST(request: Request) {
