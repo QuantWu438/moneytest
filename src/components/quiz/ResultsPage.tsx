@@ -552,7 +552,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({
                   <line x1="12" y1="2" x2="12" y2="15"/>
                 </svg>
                 <span className="text-neon-blue text-lg">
-                  {typeof navigator !== 'undefined' && navigator.share ? 'Share with Friend' : 'Copy Share Link'}
+                {typeof navigator !== 'undefined' && typeof navigator.share === 'function' ? 'Share with Friend' : 'Copy Share Link'}
                 </span>
               </button>
             </div>
