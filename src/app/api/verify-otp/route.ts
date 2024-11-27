@@ -36,9 +36,10 @@ export async function POST(request: Request) {
       );
     }
 
-    // Verify OTP using Twilio Verify API
+    // Suppress deprecation warning; prefer not to update Twilio SDK now
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     const verificationCheck = await client.verify
-      .services(verifyServiceSid)
+      .services(verifyServiceSid as string)
       .verificationChecks.create({ to: phoneNumber, code: otp });
 
     console.log('Verification status:', verificationCheck.status);
