@@ -40,7 +40,7 @@ export async function POST(request: Request) {
     // Suppress deprecation warning; prefer not to update Twilio SDK now
     // eslint-disable-next-line @typescript-eslint/no-deprecated
     await client.verify
-      .services(verifyServiceSid)
+      .services(verifyServiceSid as string)
       .verifications.create({ to: phoneNumber, channel: 'sms' });
 
     return NextResponse.json(
