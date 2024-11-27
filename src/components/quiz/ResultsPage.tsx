@@ -74,8 +74,6 @@ const ResultsPage: React.FC<ResultsPageProps> = ({
   traits,
   recommendations,
   compatibility,
-  onRetake,
-  onSaveQuest
 }) => {
   const [selectedMatch, setSelectedMatch] = useState<MatchType | null>(null);
   const [imageLoaded, setImageLoaded] = useState(false);

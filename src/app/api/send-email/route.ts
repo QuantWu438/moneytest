@@ -151,7 +151,7 @@ export async function POST(request: Request) {
     });
 
     return NextResponse.json({ message: 'Emails sent successfully' }, { status: 200 });
-  } catch (error: any) {
+  } catch (error) {
     console.error('Error sending email:', error.message || error);
 
     return NextResponse.json(

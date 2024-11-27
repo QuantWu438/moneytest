@@ -1,26 +1,25 @@
 // src/components/ui/card.tsx
-import * as React from "react"
-import { cn } from "@/lib/utils"
 
-interface CardProps extends React.HTMLAttributes<HTMLDivElement> {}
+import * as React from "react";
+import { cn } from "@/lib/utils";
 
-const Card = React.forwardRef<HTMLDivElement, CardProps>(({ className, ...props }, ref) => {
-  return (
-    <div
-      ref={ref}
-      className={cn(
-        "rounded-lg border border-neon-blue/20 bg-black/50 text-card-foreground shadow backdrop-blur-sm",
-        className
-      )}
-      {...props}
-    />
-  )
-})
-Card.displayName = "Card"
+const Card = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
+  ({ className, ...props }, ref) => {
+    return (
+      <div
+        ref={ref}
+        className={cn(
+          "rounded-lg border border-neon-blue/20 bg-black/50 text-card-foreground shadow backdrop-blur-sm",
+          className
+        )}
+        {...props}
+      />
+    );
+  }
+);
+Card.displayName = "Card";
 
-interface CardHeaderProps extends React.HTMLAttributes<HTMLDivElement> {}
-
-const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
+const CardHeader = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => {
     return (
       <div
@@ -28,14 +27,12 @@ const CardHeader = React.forwardRef<HTMLDivElement, CardHeaderProps>(
         className={cn("flex flex-col space-y-1.5 p-6", className)}
         {...props}
       />
-    )
+    );
   }
-)
-CardHeader.displayName = "CardHeader"
+);
+CardHeader.displayName = "CardHeader";
 
-interface CardTitleProps extends React.HTMLAttributes<HTMLHeadingElement> {}
-
-const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
+const CardTitle = React.forwardRef<HTMLHeadingElement, React.HTMLAttributes<HTMLHeadingElement>>(
   ({ className, ...props }, ref) => {
     return (
       <h3
@@ -43,14 +40,12 @@ const CardTitle = React.forwardRef<HTMLHeadingElement, CardTitleProps>(
         className={cn("text-2xl font-semibold leading-none tracking-tight", className)}
         {...props}
       />
-    )
+    );
   }
-)
-CardTitle.displayName = "CardTitle"
+);
+CardTitle.displayName = "CardTitle";
 
-interface CardDescriptionProps extends React.HTMLAttributes<HTMLParagraphElement> {}
-
-const CardDescription = React.forwardRef<HTMLParagraphElement, CardDescriptionProps>(
+const CardDescription = React.forwardRef<HTMLParagraphElement, React.HTMLAttributes<HTMLParagraphElement>>(
   ({ className, ...props }, ref) => {
     return (
       <p
@@ -58,25 +53,21 @@ const CardDescription = React.forwardRef<HTMLParagraphElement, CardDescriptionPr
         className={cn("text-sm text-muted-foreground", className)}
         {...props}
       />
-    )
+    );
   }
-)
-CardDescription.displayName = "CardDescription"
+);
+CardDescription.displayName = "CardDescription";
 
-interface CardContentProps extends React.HTMLAttributes<HTMLDivElement> {}
-
-const CardContent = React.forwardRef<HTMLDivElement, CardContentProps>(
+const CardContent = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => {
     return (
       <div ref={ref} className={cn("p-6 pt-0", className)} {...props} />
-    )
+    );
   }
-)
-CardContent.displayName = "CardContent"
+);
+CardContent.displayName = "CardContent";
 
-interface CardFooterProps extends React.HTMLAttributes<HTMLDivElement> {}
-
-const CardFooter = React.forwardRef<HTMLDivElement, CardFooterProps>(
+const CardFooter = React.forwardRef<HTMLDivElement, React.HTMLAttributes<HTMLDivElement>>(
   ({ className, ...props }, ref) => {
     return (
       <div 
@@ -84,10 +75,10 @@ const CardFooter = React.forwardRef<HTMLDivElement, CardFooterProps>(
         className={cn("flex items-center p-6 pt-0", className)}
         {...props}
       />
-    )
+    );
   }
-)
-CardFooter.displayName = "CardFooter"
+);
+CardFooter.displayName = "CardFooter";
 
 export {
   Card,
@@ -96,4 +87,4 @@ export {
   CardTitle,
   CardDescription,
   CardContent,
-}
+};

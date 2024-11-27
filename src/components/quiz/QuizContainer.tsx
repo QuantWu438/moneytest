@@ -38,55 +38,29 @@ const questions = [
 ];
 
 interface Compatibility {
-    good: {
-      types: string[];
-      reason: string;
-    };
-    challenging: {
-      types: string[];
-      reason: string;
-    };
-  }
-  
-  interface PersonalityType {
-    name: string;
-    description: string;
-    traits: string[];
-    recommendations: string[];
-    compatibility: {
-      good: {
-        types: string[];
-        reason: string;
-      };
-      challenging: {
-        types: string[];
-        reason: string;
-      };
-    };
-  }
-  
-  interface PersonalityType {
-    name: string;
-    description: string;
-    traits: string[];
-    recommendations: string[];
-    compatibility: {
-      good: {
-        types: string[];
-        reason: string;
-      };
-      challenging: {
-        types: string[];
-        reason: string;
-      };
-    };
-   }
-   
-   interface PersonalityTypes {
-    [key: string]: PersonalityType;
-   }
-   
-   const personalityTypes: PersonalityTypes = {
+  good: {
+    types: string[];
+    reason: string;
+  };
+  challenging: {
+    types: string[];
+    reason: string;
+  };
+}
+
+interface PersonalityType {
+  name: string;
+  description: string;
+  traits: string[];
+  recommendations: string[];
+  compatibility: Compatibility;
+}
+
+interface PersonalityTypes {
+  [key: string]: PersonalityType;
+}
+
+const personalityTypes: PersonalityTypes = {
     'INTJ': {
       name: 'The Zai Kia Saver',
       description: 'Disciplined like an "A-grade student," the Zai Kia Saver keeps a tight budget, loves CPF top-ups, and avoids risks. While exceptional at planning and ensuring long-term security, they may miss out on higher returns by sticking to overly safe, old-school methods.',
@@ -504,116 +478,131 @@ interface Compatibility {
     }
    };
 
-const QuizContainer = () => {
-  const [currentState, setCurrentState] = useState<QuizState>(QuizState.COVER);
-  const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
-  const [answers, setAnswers] = useState<Record<number, boolean>>({});
-
-  const calculatePersonalityType = () => {
-    let scores = {
-      EI: 0, // Negative = E, Positive = I
-      SN: 0, // Negative = S, Positive = N
-      TF: 0, // Negative = T, Positive = F
-      JP: 0  // Negative = J, Positive = P
+   const QuizContainer = () => {
+    const [currentState, setCurrentState] = useState<QuizState>(QuizState.COVER);
+    const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
+    const [answers, setAnswers] = useState<Record<number, boolean>>({});
+  
+    const calculatePersonalityType = () => {
+      const scores = {
+        EI: 0, // Negative = E, Positive = I
+        SN: 0, // Negative = S, Positive = N
+        TF: 0, // Negative = T, Positive = F
+        JP: 0  // Negative = J, Positive = P
+      };
+  
+      console.log('Calculating with answers:', answers);
+  
+      // Questions 1-3: E/I
+      [0, 1, 2].forEach(i => {
+        scores.EI += answers[i] ? 1 : -1;
+      });
+  
+      // Questions 4-6: S/N
+      [3, 4, 5].forEach(i => {
+        scores.SN += answers[i] ? 1 : -1;
+      });
+  
+      // Questions 7-9: T/F
+      [6, 7, 8].forEach(i => {
+        scores.TF += answers[i] ? 1 : -1;
+      });
+  
+      // Questions 10-12: J/P
+      [9, 10, 11].forEach(i => {
+        scores.JP += answers[i] ? 1 : -1;
+      });
+  
+      const type = [
+        scores.EI >= 0 ? 'I' : 'E',
+        scores.SN >= 0 ? 'N' : 'S',
+        scores.TF >= 0 ? 'T' : 'F',
+        scores.JP >= 0 ? 'J' : 'P'
+      ].join('');
+  
+      console.log('Scores:', scores);
+      console.log('Calculated type:', type);
+      console.log('Found personality:', personalityTypes[type]);
+  
+      return personalityTypes[type];
     };
-
-    console.log('Calculating with answers:', answers);
-
-    // Questions 1-3: E/I
-    [0, 1, 2].forEach(i => {
-      scores.EI += answers[i] ? 1 : -1;
-    });
-
-    // Questions 4-6: S/N
-    [3, 4, 5].forEach(i => {
-      scores.SN += answers[i] ? 1 : -1;
-    });
-
-    // Questions 7-9: T/F
-    [6, 7, 8].forEach(i => {
-      scores.TF += answers[i] ? 1 : -1;
-    });
-
-    // Questions 10-12: J/P
-    [9, 10, 11].forEach(i => {
-      scores.JP += answers[i] ? 1 : -1;
-    });
-
-    const type = [
-      scores.EI >= 0 ? 'I' : 'E',
-      scores.SN >= 0 ? 'N' : 'S',
-      scores.TF >= 0 ? 'T' : 'F',
-      scores.JP >= 0 ? 'J' : 'P'
-    ].join('');
-
-  console.log('Scores:', scores);
-  console.log('Calculated type:', type);
-  console.log('Found personality:', personalityTypes[type]);
-
-  return personalityTypes[type];
-};
-
-// Inside QuizContainer component
+  
     const handleRetake = () => {
-    setCurrentState(QuizState.COVER);
-    setCurrentQuestionIndex(0);
-    setAnswers({});
-  };
+      setCurrentState(QuizState.COVER);
+      setCurrentQuestionIndex(0);
+      setAnswers({});
+    };
   
-  const handleStart = () => {
-    setCurrentState(QuizState.QUESTION);
-  };
+    const handleStart = () => {
+      setCurrentState(QuizState.QUESTION);
+    };
   
-  const handleAnswer = (answer: boolean) => {
-    setAnswers(prev => ({
-      ...prev,
-      [currentQuestionIndex]: answer
-    }));
+    const handleAnswer = (answer: boolean) => {
+      setAnswers(prev => ({
+        ...prev,
+        [currentQuestionIndex]: answer
+      }));
   
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(prev => prev + 1);
-    } else {
-      const result = calculatePersonalityType();
-      console.log('Final answers:', answers);
-      console.log('Calculated personality:', result);
-      setCurrentState(QuizState.RESULT);
-    }
-  };
-
-  const pageVariants = {
-    initial: { x: "100%" },
-    enter: { 
-      x: 0,
-      transition: {
-        duration: 0.3,
-        ease: [0.33, 1, 0.68, 1]
+      if (currentQuestionIndex < questions.length - 1) {
+        setCurrentQuestionIndex(prev => prev + 1);
+      } else {
+        const result = calculatePersonalityType();
+        console.log('Final answers:', answers);
+        console.log('Calculated personality:', result);
+        setCurrentState(QuizState.RESULT);
       }
-    }
-  };
-
-// In QuizContainer.tsx, replace the return section with:
-const handleSaveQuest = () => {
-  // For now, just log. We'll implement the consent page transition later
-  console.log('Saving quest...');
-  // You can add state transition here when ready
-  // setCurrentState(QuizState.CONSENT);
-};
-
-// Keeping just the return section since that's where the error is
-return (
-    <div className="fixed inset-0 overflow-hidden bg-black">
-      <div className="relative w-full h-full">
-        <AnimatePresence initial={false}>
-          {currentState === QuizState.COVER && (
-            <motion.div key="cover" {...pageVariants} className="absolute inset-0">
-              <CoverPage onStart={handleStart} />
-            </motion.div>
-          )}
+    };
   
-          {currentState === QuizState.QUESTION && (
-            <div className="absolute inset-0 flex">
-              <motion.div
-                key={`question-${currentQuestionIndex}`}
+    const handleSaveQuest = () => {
+      console.log('Saving quest...');
+      // Implement the consent page transition or functionality here
+    };
+  
+    const pageVariants = {
+      initial: { x: "100%" },
+      enter: { 
+        x: 0,
+        transition: {
+          duration: 0.3,
+          ease: [0.33, 1, 0.68, 1]
+        }
+      }
+    };
+  
+    return (
+      <div className="fixed inset-0 overflow-hidden bg-black">
+        <div className="relative w-full h-full">
+          <AnimatePresence initial={false}>
+            {currentState === QuizState.COVER && (
+              <motion.div key="cover" {...pageVariants} className="absolute inset-0">
+                <CoverPage onStart={handleStart} />
+              </motion.div>
+            )}
+  
+            {currentState === QuizState.QUESTION && (
+              <div className="absolute inset-0 flex">
+                <motion.div
+                  key={`question-${currentQuestionIndex}`}
+                  initial={{ x: "100%" }}
+                  animate={{ x: 0 }}
+                  transition={{
+                    duration: 0.8,
+                    ease: "easeOut"
+                  }}
+                  className="absolute w-full h-full"
+                >
+                  <QuestionPage
+                    questionNumber={currentQuestionIndex + 1}
+                    question={questions[currentQuestionIndex]}
+                    onAnswer={handleAnswer}
+                  />
+                </motion.div>
+              </div>
+            )}
+  
+            {currentState === QuizState.RESULT && (
+              <motion.div 
+                key="result"
                 initial={{ x: "100%" }}
                 animate={{ x: 0 }}
                 transition={{
@@ -622,41 +611,21 @@ return (
                 }}
                 className="absolute w-full h-full"
               >
-                <QuestionPage
-                  questionNumber={currentQuestionIndex + 1}
-                  question={questions[currentQuestionIndex]}
-                  onAnswer={handleAnswer}
+                <ResultsPage
+                  name={calculatePersonalityType().name}
+                  description={calculatePersonalityType().description}
+                  traits={calculatePersonalityType().traits}
+                  recommendations={calculatePersonalityType().recommendations}
+                  compatibility={calculatePersonalityType().compatibility}
+                  onRetake={handleRetake}
+                  onSaveQuest={handleSaveQuest}
                 />
               </motion.div>
-            </div>
-          )}
-  
-          {currentState === QuizState.RESULT && (
-            <motion.div 
-              key="result"
-              initial={{ x: "100%" }}
-              animate={{ x: 0 }}
-              transition={{
-                duration: 0.8,
-                ease: "easeOut"
-              }}
-              className="absolute w-full h-full"
-            >
-              <ResultsPage
-                name={calculatePersonalityType().name}
-                description={calculatePersonalityType().description}
-                traits={calculatePersonalityType().traits}
-                recommendations={calculatePersonalityType().recommendations}
-                compatibility={calculatePersonalityType().compatibility}
-                onRetake={handleRetake}
-                onSaveQuest={handleSaveQuest}
-              />
-            </motion.div>
-          )}
-        </AnimatePresence>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
-    </div>
-  );
-};
-
-export default QuizContainer;
+    );
+  };
+  
+  export default QuizContainer;

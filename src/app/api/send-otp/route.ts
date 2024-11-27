@@ -24,7 +24,7 @@ export async function POST(request: Request) {
       );
     }
 
-    const verification = await client.verify
+    await client.verify
       .services(verifyServiceSid)
       .verifications.create({ to: phoneNumber, channel: 'sms' });
 

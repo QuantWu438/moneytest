@@ -132,7 +132,7 @@ const SaveQuestModal: React.FC<SaveQuestModalProps> = ({
 
       setStep(2);
       setCountdown(300);
-    } catch (err: any) {
+    } catch (err: unknown) {
       setError(err.message || 'Something went wrong. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -185,10 +185,10 @@ const SaveQuestModal: React.FC<SaveQuestModalProps> = ({
         }
 
         setStep(3);
-      } catch (err: any) {
+      } catch (err: unknown) {
         setError(err.message || 'Failed to send email after OTP verification.');
       }
-    } catch (err: any) {
+    } catch (err: unknown) {
       setOtpError(err.message || 'Something went wrong. Please try again.');
     } finally {
       setIsVerifying(false);
@@ -219,7 +219,7 @@ const SaveQuestModal: React.FC<SaveQuestModalProps> = ({
       setOtpError('OTP resent successfully');
       setStep(2);
       setCountdown(300);
-    } catch (err: any) {
+    } catch (err: unknown) {
       setOtpError(err.message || 'Something went wrong. Please try again.');
     } finally {
       setIsSubmitting(false);
@@ -286,7 +286,7 @@ const SaveQuestModal: React.FC<SaveQuestModalProps> = ({
                   <p className="text-red-400 text-sm font-orbitron">{error}</p>
                 )}
                 <p className="text-xs text-gray-400 text-center font-orbitron">
-                  We'll send your personality insights right away!
+                  We&apos;ll send your personality insights right away!
                 </p>
               </div>
 
@@ -375,7 +375,7 @@ const SaveQuestModal: React.FC<SaveQuestModalProps> = ({
             </button>
 
             <p className="text-center text-sm text-gray-400 font-orbitron">
-              Didn't receive the OTP?{' '}
+              Didn&apos;t receive the OTP?{' '}
               <button
                 onClick={handleResendOtp}
                 className="text-neon-blue hover:underline disabled:opacity-50"
@@ -406,7 +406,7 @@ const SaveQuestModal: React.FC<SaveQuestModalProps> = ({
                   Check your email: {email}
                 </p>
                 <p className="text-xs text-gray-400">
-                  (Don't see it? Check your spam folder)
+                  (Don&apos;t see it? Check your spam folder)
                 </p>
               </div>
             </div>
