@@ -1,0 +1,134 @@
+@import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: #000000;
+  --foreground: #ededed;
+  --primary-blue: #00f0ff;
+  --secondary-blue: #007ACC;
+  --neon-blue: #00f0ff;
+  --neon-pink: #ff00ff;
+  --card-border: 2px solid rgba(0, 240, 255, 0.5);
+  --card-shadow: 0 0 20px rgba(0, 240, 255, 0.5), inset 0 0 10px rgba(0, 240, 255, 0.2);
+}
+
+html, body, #root, #__next {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: 'Press Start 2P', 'Orbitron', sans-serif;
+}
+
+.cyber-card {
+  background: rgba(10, 10, 20, 0.85);
+  border: var(--card-border);
+  border-radius: 15px;
+  padding: 2rem;
+  box-shadow: var(--card-shadow);
+  width: 100%;
+  max-width: 800px;
+  margin: 1rem auto;
+}
+
+.glass-panel {
+  background: rgba(0, 0, 0, 0.8);
+  backdrop-filter: blur(12px);
+  border: var(--card-border);
+  box-shadow: var(--card-shadow);
+  width: 100%;
+  max-width: 800px;
+  margin: 1rem auto;
+  padding: 1.5rem;
+  border-radius: 15px;
+}
+
+.neon-title {
+  font-family: 'Press Start 2P', 'Orbitron', sans-serif;
+  font-size: clamp(1.5rem, 5vw, 3rem);
+  color: #fff;
+  text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue);
+  margin: 1rem 0;
+  text-align: center;
+  line-height: 1.4;
+}
+
+.cyber-button {
+  padding: 0.8rem 2rem;
+  background-color: rgba(0, 240, 255, 0.2);
+  border: 2px solid var(--neon-blue);
+  color: var(--foreground);
+  font-family: 'Press Start 2P', monospace;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  border-radius: 8px;
+}
+
+.cyber-button:hover {
+  background-color: rgba(0, 240, 255, 0.4);
+  box-shadow: 0 0 15px var(--neon-blue);
+  transform: scale(1.05);
+}
+
+.metrics-card {
+  background: rgba(20, 20, 30, 0.9);
+  border-radius: 10px;
+  padding: 1.5rem;
+  margin: 1rem 0;
+  text-align: left;
+}
+
+.question-text {
+  font-family: 'Orbitron', sans-serif;
+  font-size: clamp(1rem, 2.5vw, 1.25rem);
+  margin-bottom: 1.5rem;
+  line-height: 1.6;
+}
+
+.options-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 1rem;
+  width: 100%;
+  margin: 1rem 0;
+}
+
+@keyframes neonPulse {
+  0% { opacity: 0.8; }
+  50% { opacity: 1; box-shadow: 0 0 20px var(--neon-blue); }
+  100% { opacity: 0.8; }
+}
+
+.neon-pulse {
+  animation: neonPulse 2s infinite;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .cyber-card {
+    padding: 1rem;
+    margin: 0.5rem;
+  }
+  
+  .options-grid {
+    grid-template-columns: 1fr;
+  }
+}
+
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--background);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--neon-blue);
+  border-radius: 4px;
+}
