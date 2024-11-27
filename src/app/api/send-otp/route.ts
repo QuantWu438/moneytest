@@ -37,8 +37,8 @@ export async function POST(request: Request) {
       );
     }
 
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-expect-error: Suppressing deprecation warning; prefer not to update Twilio SDK now
+    // Suppress deprecation warning; prefer not to update Twilio SDK now
+    // eslint-disable-next-line @typescript-eslint/no-deprecated
     await client.verify
       .services(verifyServiceSid)
       .verifications.create({ to: phoneNumber, channel: 'sms' });
