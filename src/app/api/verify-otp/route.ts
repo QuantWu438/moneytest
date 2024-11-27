@@ -55,10 +55,17 @@ export async function POST(request: Request) {
       );
     }
   } catch (error) {
-    console.error('Error verifying OTP:', error.message || error);
+    let errorMessage = 'An unknown error occurred';
+
+    if (error instanceof Error) {
+      errorMessage = error.message;
+      console.error('Error verifying OTP:', error.message);
+    } else {
+      console.error('Error verifying OTP:', error);
+    }
 
     return NextResponse.json(
-      { message: 'Failed to verify OTP.', error: error.message },
+      { message: 'Failed to verify OTP.', error: errorMessage },
       { status: 500 }
     );
   }

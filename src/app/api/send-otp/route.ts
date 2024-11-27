@@ -33,9 +33,17 @@ export async function POST(request: Request) {
       { status: 200 }
     );
   } catch (error) {
-    console.error('Error sending OTP:', error);
+    let errorMessage = 'An unknown error occurred';
+
+    if (error instanceof Error) {
+      errorMessage = error.message;
+      console.error('Error sending OTP:', error.message);
+    } else {
+      console.error('Error sending OTP:', error);
+    }
+
     return NextResponse.json(
-      { message: 'Failed to send OTP' },
+      { message: 'Failed to send OTP', error: errorMessage },
       { status: 500 }
     );
   }

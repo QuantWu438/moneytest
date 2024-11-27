@@ -152,10 +152,17 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ message: 'Emails sent successfully' }, { status: 200 });
   } catch (error) {
-    console.error('Error sending email:', error.message || error);
+    let errorMessage = 'An unknown error occurred';
+
+    if (error instanceof Error) {
+      errorMessage = error.message;
+      console.error('Error sending email:', error.message);
+    } else {
+      console.error('Error sending email:', error);
+    }
 
     return NextResponse.json(
-      { message: 'Error sending email', error: error.message },
+      { message: 'Error sending email', error: errorMessage },
       { status: 500 }
     );
   }
