@@ -31,14 +31,14 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
             <Button
               variant="outline"
               className="w-full py-6 text-lg font-orbitron hover:bg-neon-blue/10 hover:text-neon-blue transition-all duration-300"
-              onClick={() => onAnswer(1)}
+              onClick={() => onAnswer(true)}
             >
               True
             </Button>
             <Button
               variant="outline"
               className="w-full py-6 text-lg font-orbitron hover:bg-neon-blue/10 hover:text-neon-blue transition-all duration-300"
-              onClick={() => onAnswer(0)}
+              onClick={() => onAnswer(false)}
             >
               False
             </Button>
