@@ -573,14 +573,14 @@ const personalityTypes: PersonalityTypes = {
     const handleAnswer = (value: number) => {
       setAnswers(prev => ({
         ...prev,
-        [currentQuestionIndex]: value
+        [currentQuestionIndex]: Boolean(value)
       }));
-  
+    
       if (currentQuestionIndex === intermediateQuestionIndex) {
         setCurrentState(QuizState.INTERMEDIATE);
         return;
       }
-  
+    
       if (currentQuestionIndex < questions.length - 1) {
         setCurrentQuestionIndex(prev => prev + 1);
       } else {
