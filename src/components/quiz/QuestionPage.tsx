@@ -45,12 +45,6 @@ const QuestionPage: React.FC<QuestionPageProps> = ({
           </div>
         </CardContent>
       </Card>
-
-      <div className="absolute inset-0 -z-10">
-        <div className="absolute inset-0 bg-[linear-gradient(to_right,#1e3c72_1px,transparent_1px),linear-gradient(to_bottom,#1e3c72_1px,transparent_1px)]
-                     bg-[size:4rem_4rem] [mask-image:radial-gradient(ellipse_80%_50%_at_50%_50%,black,transparent)]
-                     animate-grid-flow opacity-20" />
-      </div>
     </div>
   );
 };

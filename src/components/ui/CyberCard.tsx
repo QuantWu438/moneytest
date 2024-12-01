@@ -1,38 +1,24 @@
-// src/components/ui/CyberCard.tsx
-
 "use client";
 
-import React, { useEffect, useRef } from 'react';
+import React from 'react';
 import Image from 'next/image';
 
-const CyberCard: React.FC = () => {
-  const cardRef = useRef<HTMLDivElement>(null);
-  const glowRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    const card = cardRef.current;
-    const glow = glowRef.current;
-    if (!card || !glow) return;
-
-    // No additional JavaScript needed for automatic floating
-  }, []);
-
+const CyberCard = () => {
   return (
     <div
-      ref={cardRef}
       className="relative w-full max-w-lg mx-auto bg-black/30 backdrop-blur-sm border-2 border-neon-blue/30 rounded-xl
-                 transition-transform duration-300 transform-gpu animate-float3D"
-      style={{ transformStyle: 'preserve-3d', height: '400px' }} // Adjust height as needed
+                 animate-float3D h-96"
     >
-      <div ref={glowRef} className="absolute inset-0 rounded-xl transition-all duration-300 pointer-events-none animate-glow" />
-      <div className="relative z-10 w-full h-full">
-        {/* Image Section */}
-        <Image
+      <div className="absolute inset-0 rounded-xl animate-glow pointer-events-none" />
+      <div className="relative z-10 w-full h-full overflow-hidden rounded-xl">
+      <Image
           src="/1 (1).png"
           alt="Cyber Image"
-          width={500}  // Add appropriate width
-          height={300} // Add appropriate height
-          className="w-full h-full object-cover rounded-xl"
+          width={500}
+          height={300}
+          priority
+          quality={75}
+          className="w-full h-full object-cover"
         />
       </div>
     </div>
