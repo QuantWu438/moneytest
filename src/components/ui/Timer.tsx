@@ -16,7 +16,7 @@ const Timer: React.FC<TimerProps> = ({ timeLeft, setTimeLeft, onTimeUp }) => {
     }
 
     const timer = setInterval(() => {
-      setTimeLeft((prev: number) => prev - 1);
+      setTimeLeft(timeLeft - 1);
     }, 1000);
 
     return () => clearInterval(timer);
