@@ -570,26 +570,28 @@ const personalityTypes: PersonalityTypes = {
       setCurrentState(QuizState.QUESTION);
     };
   
-    const handleAnswer = (value: number) => {
+    // Update the handleAnswer function type signature
+    const handleAnswer = (answer: boolean) => {
       setAnswers(prev => ({
         ...prev,
-        [currentQuestionIndex]: Boolean(value)
+        [currentQuestionIndex]: answer
       }));
-    
+
       if (currentQuestionIndex === intermediateQuestionIndex) {
         setCurrentState(QuizState.INTERMEDIATE);
         return;
       }
-    
+
       if (currentQuestionIndex < questions.length - 1) {
         setCurrentQuestionIndex(prev => prev + 1);
       } else {
         setCurrentState(QuizState.RESULT);
       }
     };
-  
+
+    // Update handleTimeUp to pass boolean
     const handleTimeUp = () => {
-      handleAnswer(0); // Assign a default value or handle accordingly
+      handleAnswer(false);
     };
   
     const handleSaveQuest = () => {
