@@ -1,4 +1,3 @@
-// src/components/ui/Timer.tsx
 "use client";
 
 import React, { useEffect } from 'react';
@@ -17,7 +16,7 @@ const Timer: React.FC<TimerProps> = ({ timeLeft, setTimeLeft, onTimeUp }) => {
     }
 
     const timer = setInterval(() => {
-      setTimeLeft(prev => prev - 1);
+      setTimeLeft((prev: number) => prev - 1);
     }, 1000);
 
     return () => clearInterval(timer);
