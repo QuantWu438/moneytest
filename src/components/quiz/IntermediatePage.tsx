@@ -2,7 +2,11 @@ import React from 'react';
 import { Button } from '@/components/ui/button';
 import PersonalityCarousel from '@/components/ui/PersonalityCarousel';
 
-const IntermediatePage = ({ onContinue }) => {
+interface IntermediatePageProps {
+  onContinue: () => void;
+}
+
+const IntermediatePage = ({ onContinue }: IntermediatePageProps) => {
   return (
     <div className="w-full min-h-screen flex flex-col items-center justify-center bg-black p-4">
       <div className="max-w-3xl text-center mb-2">
