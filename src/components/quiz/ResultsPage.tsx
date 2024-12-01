@@ -281,7 +281,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({
     <div className="h-full w-full overflow-y-auto">
       <BackgroundEffects />
       <div className="min-h-full p-4">
-        <div className="container mx-auto py-12">
+        <div className="container mx-auto py-6 md:py-12">
           <Card className="max-w-4xl mx-auto bg-black/30 border-neon-blue/30">
             <CardHeader className="text-center space-y-8">
               <motion.div
@@ -297,7 +297,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({
                   Your Unique Money Personality is
                 </motion.p>
                 <motion.div variants={itemVariants}>
-                  <CardTitle className="text-5xl md:text-6xl font-orbitron text-neon-blue">
+                  <CardTitle className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-orbitron text-neon-blue">
                     {name}
                   </CardTitle>
                 </motion.div>
@@ -325,7 +325,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({
                   variants={itemVariants}
                   className="bg-black/20 p-6 rounded-lg border border-neon-blue/20 hover:border-neon-blue/40 transition-colors duration-300"
                 >
-                  <p className="text-xl text-gray-200 leading-relaxed font-orbitron">{description}</p>
+                  <p className="text-base md:text-xl text-gray-200 leading-relaxed font-orbitron">{description}</p>
                 </motion.div>
               </motion.div>
 
@@ -334,7 +334,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({
                 variants={containerVariants}
                 initial="hidden"
                 animate="visible"
-                className="space-y-4"
+                className="space-y-8 md:space-y-16"
               >
                 <motion.h2 variants={itemVariants} className="text-2xl font-orbitron text-neon-blue">
                   Key Traits
@@ -348,7 +348,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({
                                hover:border-neon-blue/40 hover:bg-black/30 transition-all duration-300"
                     >
                       <span className="h-3 w-3 bg-neon-blue rounded-full mr-3" />
-                      <span className="text-lg text-gray-200 font-orbitron">{trait}</span>
+                      <span className="text-base md:text-xl text-gray-200 leading-relaxed font-orbitron">{trait}</span>
                     </motion.div>
                   ))}
                 </div>
@@ -425,7 +425,7 @@ const ResultsPage: React.FC<ResultsPageProps> = ({
                                      hover:border-neon-blue/40 hover:bg-black/30 transition-all duration-300"
                           >
                             <span className="h-3 w-3 bg-neon-blue rounded-full mr-3" />
-                            <span className="text-lg text-gray-200 font-orbitron">{rec}</span>
+                            <span className="text-base md:text-xl text-gray-200 leading-relaxed font-orbitron">{rec}</span>
                           </motion.div>
                         ))}
                       </div>
