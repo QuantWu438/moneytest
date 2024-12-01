@@ -50,7 +50,7 @@ const questions = [
     When deciding where to invest, you prioritize <span className="text-green-500">objective factors like performance data, reviews, and numbers</span> over whether the investment feels personally meaningful to you.
   </>,
   <>
-    You receive a <span className="text-green-500">lucrative but ethically questionable investment opportunity</span>. Even though it's a potential goldmine, you hesitate because it doesn&apos;t align with your <span className="text-yellow-500">values or principles</span>.
+    You receive a <span className="text-green-500">lucrative but ethically questionable investment opportunity</span>. Even though it&apos;s a potential goldmine, you hesitate because it doesn&apos;t align with your <span className="text-yellow-500">values or principles</span>.
   </>,
 
   // J vs P (10-12)
