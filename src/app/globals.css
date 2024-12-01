@@ -62,3 +62,27 @@
   50% { text-shadow: 0 0 10px var(--neon-blue), 0 0 20px var(--neon-blue), 0 0 30px var(--neon-blue); }
   100% { text-shadow: 0 0 5px var(--neon-blue), 0 0 10px var(--neon-blue); }
 }
+
+.main-container {
+  position: relative;
+  width: 100%;
+  z-index: 0;
+}
+
+
+.matrix-rain {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+}
+
+.perspective-1000 {
+  perspective: 1000px;
+}
+
+.transform-style-preserve-3d {
+  transform-style: preserve-3d;
+}

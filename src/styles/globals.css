@@ -132,3 +132,49 @@ html, body, #root, #__next {
   background: var(--neon-blue);
   border-radius: 4px;
 }
+
+/* src/styles/globals.css */
+
+/* src/styles/globals.css */
+
+/* Existing imports and animations */
+
+/* Subtle 3D Floating Animation */
+@keyframes float3D {
+  0% {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+  25% {
+    transform: rotateX(2deg) rotateY(-2deg);
+  }
+  50% {
+    transform: rotateX(0deg) rotateY(-4deg);
+  }
+  75% {
+    transform: rotateX(-2deg) rotateY(-2deg);
+  }
+  100% {
+    transform: rotateX(0deg) rotateY(0deg);
+  }
+}
+
+.animate-float3D {
+  animation: float3D 10s infinite alternate;
+}
+
+/* Enhance Glow Effect */
+@keyframes glowAnimation {
+  0% {
+    background-image: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.2), rgba(0, 0, 0, 0.1));
+  }
+  50% {
+    background-image: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.3), rgba(0, 0, 0, 0.15));
+  }
+  100% {
+    background-image: radial-gradient(circle at 50% 50%, rgba(0, 240, 255, 0.2), rgba(0, 0, 0, 0.1));
+  }
+}
+
+.animate-glow {
+  animation: glowAnimation 5s infinite alternate;
+}

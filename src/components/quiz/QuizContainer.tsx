@@ -1,41 +1,70 @@
-// src/components/quiz/QuizContainer.tsx
 "use client";
 
 import React, { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import CoverPage from './CoverPage';
+import IntroPage from './IntroPage';
 import QuestionPage from './QuestionPage';
 import ResultsPage from './ResultsPage';
-
-
+import IntermediatePage from './IntermediatePage';
+import ProgressBar from '../ui/ProgressBar';
+import Timer from '../ui/Timer';
 
 enum QuizState {
   COVER = 'COVER',
+  INTRO = 'INTRO',
   QUESTION = 'QUESTION',
+  INTERMEDIATE = 'INTERMEDIATE', // New state
   RESULT = 'RESULT'
 }
 
+// Updated questions array with highlighted key phrases
 const questions = [
   // E vs I (1-3)
-  "A financial opportunity arises—a friend shares a hot stock tip or an exciting business idea. Your first instinct is to dive into research independently to assess its validity before involving anyone else.",
-  "You're at a gathering, and someone brings up their financial goals for the year. You feel energized and excited to share your own experiences and plans with the group.",
-  "You're facing a financial setback, like a bad investment or unexpected expense. Your natural response is to reflect on it privately and work through it alone before sharing with others.",
-  
+  <>
+    A financial opportunity arises—a friend shares a <span className="text-green-500">hot stock tip</span> or an <span className="text-purple-500">exciting business idea</span>. Your first instinct is to dive into research independently to assess its validity before involving anyone else.
+  </>,
+  <>
+    You're at a lively gathering, and someone confidently brings up their <span className="text-purple-500">ambitious financial goals for the year</span>. You feel <span className="text-yellow-500">energized and excited</span> to share your own experiences and plans with the group.
+  </>,
+  <>
+    You're facing a <span className="text-green-500">financial setback</span>, like a bad investment or an unexpected expense. Your natural response is to reflect on it privately and <span className="text-purple-500">work through it alone</span> before sharing with others.
+  </>,
+
   // S vs N (4-6)
-  "You've decided to start tracking your monthly spending. You feel more comfortable logging every small detail—like daily coffee or transport costs—so you know exactly where your money goes.",
-  "You're considering a major purchase, like upgrading your phone or buying new furniture. Your decision hinges on how well it matches your lifestyle or future aspirations, even if it costs a little more.",
-  "You're presented with two options: a stable CPF top-up or an investment plan with higher but less predictable returns. You're naturally drawn to the innovative investment plan, intrigued by its long-term potential.",
-  
+  <>
+    You've decided to start <span className="text-purple-500">tracking your monthly spending</span>. You feel more comfortable logging every small detail—like daily coffee or transport costs—so you know exactly where your money goes.
+  </>,
+  <>
+    You're considering a <span className="text-green-500">major purchase</span>, like upgrading your phone or buying new furniture. Your decision hinges on how well it matches your <span className="text-purple-500">lifestyle or future aspirations</span>, even if it costs a little more.
+  </>,
+  <>
+    You're presented with two options: a <span className="text-green-500">stable CPF top-up</span> or an investment plan with higher but less predictable returns. You're naturally drawn to the <span className="text-purple-500">innovative investment plan</span>, intrigued by its long-term potential.
+  </>,
+
   // T vs F (7-9)
-  "A close friend confides in you about their financial struggles. Your first instinct is to offer logical, actionable advice to help them get back on track rather than focusing on their emotions.",
-  "When deciding where to invest, you prioritize objective factors like performance data, reviews, and numbers over whether the investment feels personally meaningful to you.",
-  "You receive a lucrative but ethically questionable investment opportunity. Even though it's a potential goldmine, you hesitate because it doesn't align with your values or principles.",
-  
+  <>
+    A close friend confides in you about their <span className="text-green-500">financial struggles</span>. Your first instinct is to offer <span className="text-purple-500">logical, actionable advice</span> to help them get back on track rather than focusing on their emotions.
+  </>,
+  <>
+    When deciding where to invest, you prioritize <span className="text-green-500">objective factors like performance data, reviews, and numbers</span> over whether the investment feels personally meaningful to you.
+  </>,
+  <>
+    You receive a <span className="text-green-500">lucrative but ethically questionable investment opportunity</span>. Even though it's a potential goldmine, you hesitate because it doesn't align with your <span className="text-yellow-500">values or principles</span>.
+  </>,
+
   // J vs P (10-12)
-  "You're planning for an upcoming family vacation. You feel more comfortable mapping out a detailed itinerary and budgeting every part of the trip to avoid surprises.",
-  "A sudden expense arises, like an unexpected medical bill or a car repair. You feel calm handling it because you already have a backup plan and savings in place for emergencies.",
-  "At the start of the year, you set clear and specific financial goals for yourself and stick to them, even if unexpected distractions or opportunities come along."
+  <>
+    You're planning for an upcoming family vacation. You feel more comfortable <span className="text-purple-500">mapping out a detailed itinerary</span> and budgeting every part of the trip to avoid surprises.
+  </>,
+  <>
+    A sudden expense arises, like an <span className="text-green-500">unexpected medical bill</span> or a <span className="text-green-500">car repair</span>. You feel calm handling it because you already have a <span className="text-purple-500">backup plan and savings in place</span> for emergencies.
+  </>,
+  <>
+    At the start of the year, you set <span className="text-purple-500">clear and specific financial goals</span> for yourself and stick to them, even if <span className="text-green-500">unexpected distractions or opportunities</span> come along.
+  </>
 ];
+
 
 interface Compatibility {
   good: {
@@ -482,33 +511,32 @@ const personalityTypes: PersonalityTypes = {
     const [currentState, setCurrentState] = useState<QuizState>(QuizState.COVER);
     const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
     const [answers, setAnswers] = useState<Record<number, boolean>>({});
+    const [timeLeft, setTimeLeft] = useState(120);
+    
+  
+    const totalQuestions = questions.length;
+    const intermediateQuestionIndex = 5; // After question 6 (0-based index)
   
     const calculatePersonalityType = () => {
       const scores = {
-        EI: 0, // Negative = E, Positive = I
-        SN: 0, // Negative = S, Positive = N
-        TF: 0, // Negative = T, Positive = F
-        JP: 0  // Negative = J, Positive = P
+        EI: 0,
+        SN: 0,
+        TF: 0,
+        JP: 0
       };
-  
-      console.log('Calculating with answers:', answers);
-  
-      // Questions 1-3: E/I
+    
       [0, 1, 2].forEach(i => {
         scores.EI += answers[i] ? 1 : -1;
       });
-  
-      // Questions 4-6: S/N
+      
       [3, 4, 5].forEach(i => {
         scores.SN += answers[i] ? 1 : -1;
       });
-  
-      // Questions 7-9: T/F
+      
       [6, 7, 8].forEach(i => {
         scores.TF += answers[i] ? 1 : -1;
       });
-  
-      // Questions 10-12: J/P
+      
       [9, 10, 11].forEach(i => {
         scores.JP += answers[i] ? 1 : -1;
       });
@@ -520,10 +548,6 @@ const personalityTypes: PersonalityTypes = {
         scores.JP >= 0 ? 'J' : 'P'
       ].join('');
   
-      console.log('Scores:', scores);
-      console.log('Calculated type:', type);
-      console.log('Found personality:', personalityTypes[type]);
-  
       return personalityTypes[type];
     };
   
@@ -533,24 +557,39 @@ const personalityTypes: PersonalityTypes = {
       setAnswers({});
     };
   
+    const handleNext = () => {
+      setCurrentState(QuizState.INTRO);
+    };
+  
     const handleStart = () => {
       setCurrentState(QuizState.QUESTION);
     };
   
-    const handleAnswer = (answer: boolean) => {
+    const handleContinue = () => {
+      setCurrentQuestionIndex(prev => prev + 1);
+      setCurrentState(QuizState.QUESTION);
+    };
+  
+    const handleAnswer = (value: number) => {
       setAnswers(prev => ({
         ...prev,
-        [currentQuestionIndex]: answer
+        [currentQuestionIndex]: value
       }));
+  
+      if (currentQuestionIndex === intermediateQuestionIndex) {
+        setCurrentState(QuizState.INTERMEDIATE);
+        return;
+      }
   
       if (currentQuestionIndex < questions.length - 1) {
         setCurrentQuestionIndex(prev => prev + 1);
       } else {
-        const result = calculatePersonalityType();
-        console.log('Final answers:', answers);
-        console.log('Calculated personality:', result);
         setCurrentState(QuizState.RESULT);
       }
+    };
+  
+    const handleTimeUp = () => {
+      handleAnswer(0); // Assign a default value or handle accordingly
     };
   
     const handleSaveQuest = () => {
@@ -559,71 +598,121 @@ const personalityTypes: PersonalityTypes = {
     };
   
     const pageVariants = {
-      initial: { x: "100%" },
-      enter: { 
-        x: 0,
-        transition: {
-          duration: 0.3,
-          ease: [0.33, 1, 0.68, 1]
-        }
+      initial: { opacity: 0, y: 50 },
+      animate: { 
+        opacity: 1, 
+        y: 0, 
+        transition: { duration: 0.5, ease: "easeOut" } 
+      },
+      exit: { 
+        opacity: 0, 
+        y: -50, 
+        transition: { duration: 0.5, ease: "easeIn" } 
       }
     };
   
     return (
-      <div className="fixed inset-0 overflow-hidden bg-black">
-        <div className="relative w-full h-full">
-          <AnimatePresence initial={false}>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-black">
+        {currentState === QuizState.QUESTION ? (
+          <div className="w-full max-w-2xl flex flex-col items-center">
+            {/* Header Positioned Just Above the Question Container */}
+            <div className="flex justify-center items-center py-2 w-full">
+              <h1 className="neon-title text-3xl font-orbitron">
+                <span className="title-gradient">Quant</span>Quest
+              </h1>
+            </div>
+  
+            {/* Animated Question Content */}
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={`question-${currentQuestionIndex}`}
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                className="w-full p-4"
+              >
+                <QuestionPage
+                  questionNumber={currentQuestionIndex + 1}
+                  question={questions[currentQuestionIndex]}
+                  onAnswer={handleAnswer}
+                />
+              </motion.div>
+            </AnimatePresence>
+  
+            {/* Progress Bar and Timer Positioned Below the Question Container */}
+            <div className="w-full flex justify-between items-center px-4 py-2">
+              <ProgressBar current={currentQuestionIndex + 1} total={totalQuestions} />
+              <Timer 
+                  timeLeft={timeLeft}
+                  setTimeLeft={setTimeLeft}
+                  onTimeUp={handleTimeUp} 
+                />
+            </div>
+          </div>
+        ) : (
+          <AnimatePresence mode="wait">
             {currentState === QuizState.COVER && (
-              <motion.div key="cover" {...pageVariants} className="absolute inset-0">
-                <CoverPage onStart={handleStart} />
+              <motion.div
+                key="cover"
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                className="flex-1 flex items-center justify-center p-4"
+              >
+                <CoverPage onNext={handleNext} />
               </motion.div>
             )}
   
-            {currentState === QuizState.QUESTION && (
-              <div className="absolute inset-0 flex">
-                <motion.div
-                  key={`question-${currentQuestionIndex}`}
-                  initial={{ x: "100%" }}
-                  animate={{ x: 0 }}
-                  transition={{
-                    duration: 0.8,
-                    ease: "easeOut"
-                  }}
-                  className="absolute w-full h-full"
-                >
-                  <QuestionPage
-                    questionNumber={currentQuestionIndex + 1}
-                    question={questions[currentQuestionIndex]}
-                    onAnswer={handleAnswer}
-                  />
-                </motion.div>
-              </div>
+            {currentState === QuizState.INTRO && (
+              <motion.div
+                key="intro"
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                className="flex-1 flex items-center justify-center p-4"
+              >
+                <IntroPage onStart={handleStart} />
+              </motion.div>
+            )}
+  
+            {currentState === QuizState.INTERMEDIATE && (
+              <motion.div
+                key="intermediate"
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                className="flex-1 flex items-center justify-center p-4"
+              >
+                <IntermediatePage onContinue={handleContinue} />
+              </motion.div>
             )}
   
             {currentState === QuizState.RESULT && (
               <motion.div 
                 key="result"
-                initial={{ x: "100%" }}
-                animate={{ x: 0 }}
-                transition={{
-                  duration: 0.8,
-                  ease: "easeOut"
-                }}
-                className="absolute w-full h-full"
+                variants={pageVariants}
+                initial="initial"
+                animate="animate"
+                exit="exit"
+                className="flex-1 flex items-center justify-center p-4"
               >
                 <ResultsPage
-                  name={calculatePersonalityType().name}
-                  description={calculatePersonalityType().description}
-                  traits={calculatePersonalityType().traits}
-                  recommendations={calculatePersonalityType().recommendations}
-                  compatibility={calculatePersonalityType().compatibility}
+                  name={calculatePersonalityType()?.name || "Unknown"}
+                  description={calculatePersonalityType()?.description || "No description available."}
+                  traits={calculatePersonalityType()?.traits || []}
+                  recommendations={calculatePersonalityType()?.recommendations || []}
+                  compatibility={calculatePersonalityType()?.compatibility || { good: { types: [], reason: "" }, challenging: { types: [], reason: "" } }}
                   onRetake={handleRetake}
                   onSaveQuest={handleSaveQuest}
                 />
               </motion.div>
             )}
           </AnimatePresence>
-        </div>
+        )}
       </div>
     );
   };

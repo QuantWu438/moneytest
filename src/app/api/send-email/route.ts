@@ -23,7 +23,6 @@ export async function POST(request: Request) {
       recommendations,
     }: EmailData = await request.json();
 
-    // Validate required fields
     if (!name || !email || !personalityType) {
       return NextResponse.json(
         { message: 'Missing required fields' },
@@ -43,106 +42,103 @@ export async function POST(request: Request) {
       );
     }
 
-    // Create transporter
     const transporter = nodemailer.createTransport({
       host: 'smtp.titan.email',
       port: 465,
-      secure: true, // use SSL
+      secure: true,
       auth: {
         user: emailUser,
         pass: emailPassword,
       },
     });
 
-    // Verify transporter configuration
     await transporter.verify();
 
-    // Build user email HTML
-    let userEmailHtml = `
-      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto;">
-        <h1 style="color: #0891b2;">Hello ${name},</h1>
+    const userEmailHtml = `
+      <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px; background-color: #ffffff;">
+        <header style="text-align: center; margin-bottom: 30px; background-color: #000000; padding: 20px; border-radius: 8px;">
+          <img src="https://quantquest.vercel.app/images/quantquestlogo.png" alt="QuantQuest Logo" style="max-width: 200px;" />
+        </header>
+
+        <h1 style="color: #000000;">Hello ${name},</h1>
         
-        <p>Thank you for completing our Money Personality Assessment. Here are your results:</p>
+        <p>Congratulations on taking a significant step toward financial empowerment by completing our <strong>Money Personality Assessment</strong>! Your results reveal that you are <strong>"${personalityType}"</strong>.</p>
         
-        <div style="background: #f8f9fa; padding: 20px; margin: 20px 0; border-radius: 8px;">
-          <h2 style="color: #0891b2; margin-top: 0;">Your Money Personality: ${personalityType}</h2>
-    `;
-
-    // Add Description if available
-    if (description) {
-      userEmailHtml += `<p><strong>Description:</strong> ${description}</p>`;
-    }
-
-    // Add Key Traits if available
-    if (traits && traits.length > 0) {
-      userEmailHtml += `
-        <h3 style="color: #0891b2;">Key Traits:</h3>
-        <ul>
-          ${traits.map(trait => `<li>${trait}</li>`).join('')}
-        </ul>
-      `;
-    }
-
-    // Add Recommended Products if available
-    if (recommendations && recommendations.length > 0) {
-      userEmailHtml += `
-        <h3 style="color: #0891b2;">Recommended Products:</h3>
-        <ul>
-          ${recommendations.map(rec => `<li>${rec}</li>`).join('')}
-        </ul>
-      `;
-    }
-
-    userEmailHtml += `
+        <p>At <strong>QuantQuest</strong>, our mission is to empower individuals and financial advisors with innovative tools that elevate financial decision-making.</p>
+        
+        <div style="background: #f1f5f9; padding: 25px; margin: 20px 0; border-radius: 8px; border-left: 4px solid #000000;">
+          <h2 style="color: #000000; margin-top: 0;">Your Money Personality: ${personalityType}</h2>
+          
+          ${description ? `<p><strong>Description:</strong> ${description}</p>` : ''}
+          
+          ${traits && traits.length > 0 ? `
+            <h3 style="color: #000000;">Key Traits:</h3>
+            <ul style="color: #1e293b;">
+              ${traits.map(trait => `<li>${trait}</li>`).join('')}
+            </ul>
+          ` : ''}
+          
+          ${recommendations && recommendations.length > 0 ? `
+            <h3 style="color: #000000;">Recommended Products:</h3>
+            <ul style="color: #1e293b;">
+              ${recommendations.map(rec => `<li>${rec}</li>`).join('')}
+            </ul>
+          ` : ''}
         </div>
-
-        <div style="margin: 30px 0;">
-          <p><strong>What's Next?</strong></p>
-          <p>Book a free consultation to discuss your investment strategy!</p>
-          <p>Reply to this email or call us to schedule your session.</p>
-        </div>
-
-        <hr style="border: 1px solid #eee; margin: 30px 0;" />
         
-        <p style="color: #666; font-size: 14px;">Best regards,<br>QuantQuest</p>
+        <h3 style="color: #000000;">Addressing Your Financial Needs:</h3>
+        <ul style="color: #1e293b;">
+          <li><strong>Financial Clarity:</strong> We demystify finances with user-friendly tools</li>
+          <li><strong>Personalized Guidance:</strong> Our strategies are tailored to your specific needs</li>
+          <li><strong>Trusted Partnership:</strong> We build trust through open communication</li>
+        </ul>
+        
+        <div style="background: #000000; color: #ffffff; padding: 25px; border-radius: 8px; margin: 30px 0;">
+          <h3 style="color: #ffffff; margin-top: 0;">What's Next?</h3>
+          <p>We'll reach out shortly to schedule your personalized consultation. This conversation will help align our strategies with your financial goals.</p>
+        </div>
+        
+        <hr style="border: 1px solid #e2e8f0; margin: 30px 0;" />
+        
+        <footer style="text-align: center; color: #475569;">
+          <p style="font-size: 16px;">Best regards,<br>QuantQuest Team</p>
+          <p>
+            Ben Zhang<br>
+            Senior Financial Advisor<br>
+            <a href="https://quantquest.vercel.app/" style="color: #000000; text-decoration: none;">https://quantquest.sg/</a><br>
+            <a href="tel:+65 92218314" style="color: #000000; text-decoration: none;">+65 9221 8314</a>
+          </p>
+          <p>
+            <a href="https://quantquest.vercel.app/privacy-policy" style="color: #000000; text-decoration: none;">Privacy Policy</a>
+          </p>
+          
+          <div style="font-size: 12px; color: #64748b; margin-top: 20px;">
+            <p>Your privacy is our utmost priority. All information is kept strictly confidential in accordance with PDPA.</p>
+          </div>
+        </footer>
       </div>
     `;
 
-    // Send email to user
     await transporter.sendMail({
       from: emailUser,
       to: email,
-      subject: 'Your Money Personality Results',
+      subject: 'Unlock Your Financial Potential with QuantQuest',
       html: userEmailHtml,
     });
 
-    // Build admin email HTML
-    let adminEmailHtml = `
+    const adminEmailHtml = `
       <div style="font-family: Arial, sans-serif;">
         <h2>New Lead from Money Personality Tool</h2>
         <p><strong>Name:</strong> ${name}</p>
         <p><strong>Email:</strong> ${email}</p>
         <p><strong>Money Personality:</strong> ${personalityType}</p>
+        ${description ? `<p><strong>Description:</strong> ${description}</p>` : ''}
+        ${traits && traits.length > 0 ? `<p><strong>Key Traits:</strong> ${traits.join(', ')}</p>` : ''}
+        ${recommendations && recommendations.length > 0 ? `<p><strong>Recommended Products:</strong> ${recommendations.join(', ')}</p>` : ''}
+        <p><strong>Date:</strong> ${new Date().toLocaleString()}</p>
+      </div>
     `;
 
-    // Add Description if available
-    if (description) {
-      adminEmailHtml += `<p><strong>Description:</strong> ${description}</p>`;
-    }
-
-    // Add Key Traits if available
-    if (traits && traits.length > 0) {
-      adminEmailHtml += `<p><strong>Key Traits:</strong> ${traits.join(', ')}</p>`;
-    }
-
-    // Add Recommended Products if available
-    if (recommendations && recommendations.length > 0) {
-      adminEmailHtml += `<p><strong>Recommended Products:</strong> ${recommendations.join(', ')}</p>`;
-    }
-
-    adminEmailHtml += `<p><strong>Date:</strong> ${new Date().toLocaleString()}</p></div>`;
-
-    // Send notification to admin
     await transporter.sendMail({
       from: emailUser,
       to: adminEmail,
@@ -153,14 +149,10 @@ export async function POST(request: Request) {
     return NextResponse.json({ message: 'Emails sent successfully' }, { status: 200 });
   } catch (error) {
     let errorMessage = 'An unknown error occurred';
-
     if (error instanceof Error) {
       errorMessage = error.message;
       console.error('Error sending email:', error.message);
-    } else {
-      console.error('Error sending email:', error);
     }
-
     return NextResponse.json(
       { message: 'Error sending email', error: errorMessage },
       { status: 500 }
