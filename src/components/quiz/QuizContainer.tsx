@@ -22,24 +22,24 @@ enum QuizState {
 const questions = [
   // E vs I (1-3)
   <>
-    A financial opportunity arises—a friend shares a <span className="text-green-500">hot stock tip</span> or an <span className="text-purple-500">exciting business idea</span>. Your first instinct is to dive into research independently to assess its validity before involving anyone else.
+    A financial opportunity arises&mdash;a friend shares a <span className="text-green-500">hot stock tip</span> or an <span className="text-purple-500">exciting business idea</span>. Your first instinct is to dive into research independently to assess its validity before involving anyone else.
   </>,
   <>
-    You're at a lively gathering, and someone confidently brings up their <span className="text-purple-500">ambitious financial goals for the year</span>. You feel <span className="text-yellow-500">energized and excited</span> to share your own experiences and plans with the group.
+    You&apos;re at a lively gathering, and someone confidently brings up their <span className="text-purple-500">ambitious financial goals for the year</span>. You feel <span className="text-yellow-500">energized and excited</span> to share your own experiences and plans with the group.
   </>,
   <>
-    You're facing a <span className="text-green-500">financial setback</span>, like a bad investment or an unexpected expense. Your natural response is to reflect on it privately and <span className="text-purple-500">work through it alone</span> before sharing with others.
+    You&apos;re facing a <span className="text-green-500">financial setback</span>, like a bad investment or an unexpected expense. Your natural response is to reflect on it privately and <span className="text-purple-500">work through it alone</span> before sharing with others.
   </>,
 
   // S vs N (4-6)
   <>
-    You've decided to start <span className="text-purple-500">tracking your monthly spending</span>. You feel more comfortable logging every small detail—like daily coffee or transport costs—so you know exactly where your money goes.
+    You&apos;ve decided to start <span className="text-purple-500">tracking your monthly spending</span>. You feel more comfortable logging every small detail—like daily coffee or transport costs—so you know exactly where your money goes.
   </>,
   <>
-    You're considering a <span className="text-green-500">major purchase</span>, like upgrading your phone or buying new furniture. Your decision hinges on how well it matches your <span className="text-purple-500">lifestyle or future aspirations</span>, even if it costs a little more.
+    You&apos;re considering a <span className="text-green-500">major purchase</span>, like upgrading your phone or buying new furniture. Your decision hinges on how well it matches your <span className="text-purple-500">lifestyle or future aspirations</span>, even if it costs a little more.
   </>,
   <>
-    You're presented with two options: a <span className="text-green-500">stable CPF top-up</span> or an investment plan with higher but less predictable returns. You're naturally drawn to the <span className="text-purple-500">innovative investment plan</span>, intrigued by its long-term potential.
+    You&apos;re presented with two options: a <span className="text-green-500">stable CPF top-up</span> or an investment plan with higher but less predictable returns. You&apos;re naturally drawn to the <span className="text-purple-500">innovative investment plan</span>, intrigued by its long-term potential.
   </>,
 
   // T vs F (7-9)
@@ -50,12 +50,12 @@ const questions = [
     When deciding where to invest, you prioritize <span className="text-green-500">objective factors like performance data, reviews, and numbers</span> over whether the investment feels personally meaningful to you.
   </>,
   <>
-    You receive a <span className="text-green-500">lucrative but ethically questionable investment opportunity</span>. Even though it's a potential goldmine, you hesitate because it doesn't align with your <span className="text-yellow-500">values or principles</span>.
+    You receive a <span className="text-green-500">lucrative but ethically questionable investment opportunity</span>. Even though it's a potential goldmine, you hesitate because it doesn&apos;t align with your <span className="text-yellow-500">values or principles</span>.
   </>,
 
   // J vs P (10-12)
   <>
-    You're planning for an upcoming family vacation. You feel more comfortable <span className="text-purple-500">mapping out a detailed itinerary</span> and budgeting every part of the trip to avoid surprises.
+    You&apos;re planning for an upcoming family vacation. You feel more comfortable <span className="text-purple-500">mapping out a detailed itinerary</span> and budgeting every part of the trip to avoid surprises.
   </>,
   <>
     A sudden expense arises, like an <span className="text-green-500">unexpected medical bill</span> or a <span className="text-green-500">car repair</span>. You feel calm handling it because you already have a <span className="text-purple-500">backup plan and savings in place</span> for emergencies.

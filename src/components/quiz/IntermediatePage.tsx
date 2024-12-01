@@ -1,5 +1,4 @@
 import React from 'react';
-import { motion } from 'framer-motion';
 import { Button } from '@/components/ui/button';
 import PersonalityCarousel from '@/components/ui/PersonalityCarousel';
 
@@ -8,7 +7,7 @@ const IntermediatePage = ({ onContinue }) => {
     <div className="w-full min-h-screen flex flex-col items-center justify-center bg-black p-4">
       <div className="max-w-3xl text-center mb-2">
         <h2 className="text-3xl font-orbitron text-neon-blue mb-2">
-          You're Halfway There!
+          You&apos;re Halfway There!
         </h2>
         <p className="text-lg text-white/80">
           Based on your responses, you might align with one of these fascinating money personalities.

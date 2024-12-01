@@ -3,6 +3,7 @@
 "use client";
 
 import React, { useEffect, useRef } from 'react';
+import Image from 'next/image';
 
 const CyberCard: React.FC = () => {
   const cardRef = useRef<HTMLDivElement>(null);
@@ -26,9 +27,11 @@ const CyberCard: React.FC = () => {
       <div ref={glowRef} className="absolute inset-0 rounded-xl transition-all duration-300 pointer-events-none animate-glow" />
       <div className="relative z-10 w-full h-full">
         {/* Image Section */}
-        <img
-          src="/1 (1).png" // Ensure the image is renamed without spaces: "1-1.png"
+        <Image
+          src="/1 (1).png"
           alt="Cyber Image"
+          width={500}  // Add appropriate width
+          height={300} // Add appropriate height
           className="w-full h-full object-cover rounded-xl"
         />
       </div>

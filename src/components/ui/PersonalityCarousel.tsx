@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from '@/styles/PersonalityCarousel.module.css';
+import Image from 'next/image';
 
 const personalities = [
   { title: 'The Kiasu Keeper', image: '/assets/personalities/the-kiasu-keeper.png' },
@@ -27,11 +28,13 @@ const PersonalityCarousel = () => {
           >
             <div className={styles.card}>
               <p className={styles.title}>{personality.title}</p>
-              <img 
-                src={personality.image} 
-                alt={personality.title} 
-                className={styles.image}
-              />
+              <Image
+              src={personality.image} 
+              alt={personality.title} 
+              width={400}    // Add appropriate width
+              height={300}   // Add appropriate height
+              className={styles.image}
+            />
             </div>
           </div>
         ))}
