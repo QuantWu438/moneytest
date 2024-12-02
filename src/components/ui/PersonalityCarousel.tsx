@@ -17,32 +17,33 @@ const PersonalityCarousel = () => {
   return (
     <div className={styles.carouselWrapper}>
       <div className={styles.carousel}>
-        {personalities.map((personality, index) => (
-          <div 
-            key={index} 
-            className={styles.slide}
-            style={{ 
-              '--i': index,
-              '--total': personalities.length
-            } as React.CSSProperties}
-          >
-            <div className={styles.card}>
-              <p className={styles.title}>{personality.title}</p>
-              <Image
-                src={personality.image}
-                alt={personality.title}
-                width={300}
-                height={225}
-                loading={index < 3 ? "eager" : "lazy"}
-                quality={60}
-                placeholder="blur"
-                blurDataURL="data:image/jpeg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gHYSUNDX1BST0ZJTEUAAQEAAAHIAAAAAAQwAABtbnRyUkdCIFhZWiAH4AABAAEAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAACRyWFlaAAABFAAAABRnWFlaAAABKAAAABRiWFlaAAABPAAAABR3dHB0AAABUAAAABRyVFJDAAABZAAAAChnVFJDAAABZAAAAChiVFJDAAABZAAAAChjcHJ0AAABjAAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAAgAAAAcAHMAUgBHAEJYWVogAAAAAAAAb6IAADj1AAADkFhZWiAAAAAAAABimQAAt4UAABjaWFlaIAAAAAAAACSgAAAPhAAAts9YWVogAAAAAAAA9tYAAQAAAADTLXBhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABtbHVjAAAAAAAAAAEAAAAMZW5VUwAAACAAAAAcAEcAbwBvAGcAbABlACAASQBuAGMALgAgADIAMAAxADb/2wBDABQODxIPDRQSEBIXFRQdHx0fHRsdHSIeHx8iLCYlJSYmLCwoLC0tLS0sLCwtQC03Nz1AREREREREREREREREREb/2wBDARUXFyAeIB4gIB4gICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICAgICb/wAARCAAIAAoDASIAAhEBAxEB/8QAFQABAQAAAAAAAAAAAAAAAAAAAAb/xAAUEAEAAAAAAAAAAAAAAAAAAAAA/8QAFQEBAQAAAAAAAAAAAAAAAAAAAAX/xAAUEQEAAAAAAAAAAAAAAAAAAAAA/9oADAMBAAIRAxEAPwCdABmX/9k="
-                sizes="(max-width: 768px) 100vw, 300px"
-                className={styles.image}
-              />
+        {personalities.map((personality, index) => {
+          const shouldPrioritize = index < 2;
+          return (
+            <div 
+              key={index} 
+              className={styles.slide}
+              style={{ 
+                '--i': index,
+                '--total': personalities.length
+              } as React.CSSProperties}
+            >
+              <div className={styles.card}>
+                <p className={styles.title}>{personality.title}</p>
+                <Image
+                  src={personality.image}
+                  alt={personality.title}
+                  width={250}
+                  height={188}
+                  loading={shouldPrioritize ? "eager" : "lazy"}
+                  quality={40}
+                  className={styles.image}
+                  sizes="(max-width: 768px) 100vw, 250px"
+                />
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </div>
     </div>
   );
